@@ -6,9 +6,9 @@ FROM `Car Sales Data`.`car_sales_data`
 GROUP BY `Salesperson`
 ORDER BY SUM(`Commission Earned`) DESC
 Limit 1;
-<<<<<<< HEAD:SELECT `Salesperson`, CONCAT('$', FORMAT(SUM(`Comm
 
--- removed the dubicate names in the file to get correct number 
+
+-- removed the duplicate names in the file to get the correct number 
 
 SELECT 
     TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
@@ -20,5 +20,10 @@ FROM `Car Sales Data`.`car_sales_data`
 GROUP BY Cleaned_Salesperson
 ORDER BY SUM(`Commission Earned`) DESC,
 Limit 1;
-=======
->>>>>>> 3f78b5bbaeb12b5e41828b645cd0e3122e42bea6:Top salesperson
+
+-- to check if the newly cleaned table shows the same answers (it does match it) 
+
+SELECT `Cleaned_Salesperson`, CONCAT('$', FORMAT(SUM(`Commission Earned`), 2)) as `Total_Commission`
+FROM `Car Sales Data`.`cleaned_car_sales_data`
+GROUP BY `Cleaned_Salesperson`
+ORDER BY SUM(`Commission Earned`) DESC;
