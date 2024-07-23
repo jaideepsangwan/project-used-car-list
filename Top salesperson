@@ -1,0 +1,24 @@
+-- Top salesperson with how much commission earned 
+
+
+SELECT `Salesperson`, CONCAT('$', FORMAT(SUM(`Commission Earned`), 2)) as `Total_Commission`
+FROM `Car Sales Data`.`car_sales_data`
+GROUP BY `Salesperson`
+ORDER BY SUM(`Commission Earned`) DESC
+Limit 1;
+<<<<<<< HEAD:SELECT `Salesperson`, CONCAT('$', FORMAT(SUM(`Comm
+
+-- removed the dubicate names in the file to get correct number 
+
+SELECT 
+    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+    REPLACE(REPLACE(`Salesperson`, ' MD', ''), ' Jr.', ''), ' PhD', ''), 
+    ' DDS', ''), ' DVM', ''), ' II', ''), ' III', ''), ' Mr.', ''), ' Dr.', '')) 
+    AS Cleaned_Salesperson, 
+    FORMAT(SUM(`Commission Earned`), 2) AS Total_Commission
+FROM `Car Sales Data`.`car_sales_data`
+GROUP BY Cleaned_Salesperson
+ORDER BY SUM(`Commission Earned`) DESC,
+Limit 1;
+=======
+>>>>>>> 3f78b5bbaeb12b5e41828b645cd0e3122e42bea6:Top salesperson

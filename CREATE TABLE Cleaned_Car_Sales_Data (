@@ -1,0 +1,27 @@
+CREATE TABLE Cleaned_Car_Sales_Data (
+    date DATE,
+    Cleaned_Salesperson VARCHAR(255),
+    `Customer Name` VARCHAR(255),
+    `Car Make` VARCHAR(255),
+    `Car Model` VARCHAR(255),
+    `Car Year` INT,
+    `Sale Price` DECIMAL(10, 2),
+    `Commission Rate` DECIMAL(5, 2), -- Adjusted scale to be less than precision
+    `Commission Earned` DECIMAL(10, 2)
+);
+
+INSERT INTO Cleaned_Car_Sales_Data (date, Cleaned_Salesperson, `Customer Name`, `Car Make`, `Car Model`, `Car Year`, `Sale Price`, `Commission Rate`, `Commission Earned`)
+SELECT 
+    cs.date,
+    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+    REPLACE(REPLACE(cs.`Salesperson`, ' MD', ''), ' Jr.', ''), ' PhD', ''), 
+    ' DDS', ''), ' DVM', ''), ' II', ''), ' III', ''), ' Mr.', ''), ' Dr.', '')) 
+    AS Salesperson, 
+    cs.`Customer Name`, 
+    cs.`Car Make`, 
+    cs.`Car Model`, 
+    cs.`Car Year`, 
+    cs.`Sale Price`, 
+    cs.`Commission Rate`,
+    cs.`Commission Earned`
+FROM `Car Sales Data`.`car_sales_data` cs;
