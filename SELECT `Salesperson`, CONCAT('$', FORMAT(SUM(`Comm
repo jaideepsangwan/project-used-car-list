@@ -1,5 +1,0 @@
-SELECT `Salesperson`, CONCAT('$', FORMAT(SUM(`Commission Earned`), 2)) as `Total_Commission`
-FROM `Car Sales Data`.`car_sales_data`
-GROUP BY `Salesperson`
-ORDER BY SUM(`Commission Earned`) DESC
-Limit 1;
