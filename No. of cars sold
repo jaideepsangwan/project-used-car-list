@@ -1,0 +1,13 @@
+-- by the Car Make 
+
+SELECT `Car Make`, COUNT(*) AS `Number of Cars Sold`
+FROM Cleaned_Car_Sales_Data
+GROUP BY `Car Make`
+ORDER BY `Number of Cars Sold` DESC;
+
+-- by the Car Model 
+
+SELECT `Car Model`, COUNT(*) AS `Number of Cars Sold`
+FROM Cleaned_Car_Sales_Data
+GROUP BY `Car Model`
+ORDER BY `Number of Cars Sold` DESC;
