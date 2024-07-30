@@ -1,0 +1,90 @@
+-- Cleaning Data in SQL Queries
+
+-- Select all records from the Car Sales Data table
+SELECT * 
+FROM `Car Sales Data`.`car_sales_data 2`;
+
+-- Disable SQL Safe Updates to allow updates without a WHERE clause
+SET SQL_SAFE_UPDATES = 0;
+
+-- Update the Car Make for all the car Models
+
+-- Update the make for F-150 models
+UPDATE `Car Sales Data`.`car_sales_data 2`
+SET `car make` = 'Ford'
+WHERE `car model` = 'F-150';
+
+-- Update the make for Silverado models
+UPDATE `Car Sales Data`.`car_sales_data 2`
+SET `car make` = 'Chevrolet'
+WHERE `car model` = 'Silverado';
+
+-- Update the make for Civic models
+UPDATE `Car Sales Data`.`car_sales_data 2`
+SET `car make` = 'Honda'
+WHERE `car model` = 'Civic';
+
+-- Update the make for Altima models
+UPDATE `Car Sales Data`.`car_sales_data 2`
+SET `car make` = 'Nissan'
+WHERE `car model` = 'Altima';
+
+-- Update the make for Corolla models
+UPDATE `Car Sales Data`.`car_sales_data 2`
+SET `car make` = 'Toyota'
+WHERE `car model` = 'Corolla';
+
+-- Check for duplicate names in the Salesperson column
+SELECT * 
+FROM `Car Sales Data`.`car_sales_data 2`
+WHERE Salesperson LIKE 'Michael Smith %';
+
+-- Remove the duplicate names in the Salesperson column
+-- and calculate total commission earned by each cleaned salesperson
+SELECT 
+    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+    REPLACE(REPLACE(`Salesperson`, ' MD', ''), ' Jr.', ''), ' PhD', ''), 
+    ' DDS', ''), ' DVM', ''), ' II', ''), ' III', ''), ' Mr.', ''), ' Dr.', '')) 
+    AS Cleaned_Salesperson, 
+    FORMAT(SUM(`Commission Earned`), 2) AS Total_Commission
+FROM `Car Sales Data`.`car_sales_data 2`
+GROUP BY Cleaned_Salesperson
+ORDER BY SUM(`Commission Earned`) DESC
+LIMIT 1;
+
+-- Create a new column for the cleaned-up salesperson names
+ALTER TABLE `Car Sales Data`.`car_sales_data 2`
+ADD COLUMN `Cleaned_Salesperson` VARCHAR(255);
+
+-- Update the new column with the cleaned-up salesperson names
+UPDATE `Car Sales Data`.`car_sales_data 2`
+SET `Cleaned_Salesperson` = TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+    REPLACE(REPLACE(`Salesperson`, ' MD', ''), ' Jr.', ''), ' PhD', ''), 
+    ' DDS', ''), ' DVM', ''), ' II', ''), ' III', ''), ' Mr.', ''), ' Dr.', ''));
+
+-- Check if duplicates exist in the new Cleaned_Salesperson column
+SELECT * 
+FROM `Car Sales Data`.`car_sales_data 2`
+WHERE Cleaned_Salesperson LIKE 'Michael Smith %';
+
+-- Top salesperson with the amount of commission earned
+SELECT `Cleaned_Salesperson`, CONCAT('$', FORMAT(SUM(`Commission Earned`), 2)) as `Total_Commission`
+FROM `Car Sales Data`.`car_sales_data 2`
+GROUP BY `Cleaned_Salesperson`
+ORDER BY SUM(`Commission Earned`) DESC;
+
+-- Number of cars sold by the Car Make
+SELECT `Car Make`, COUNT(*) AS `Number of Cars Sold`
+FROM `Car Sales Data`.`car_sales_data 2`
+GROUP BY `Car Make`
+ORDER BY `Number of Cars Sold` DESC;
+
+-- Number of cars sold by the Car Model
+SELECT `Car Model`, COUNT(*) AS `Number of Cars Sold`
+FROM `Car Sales Data`.`car_sales_data 2`
+GROUP BY `Car Model`
+ORDER BY `Number of Cars Sold` DESC;
+
+
+-- Enable SQL Safe Updates after the update operations
+SET SQL_SAFE_UPDATES = 1;
